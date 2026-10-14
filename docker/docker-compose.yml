@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  review-service:
+    image: "review-service"
+    container_name: "review-service"
+    depends_on:
+      postgres-reviews:
+        condition: service_healthy
+    ports:
+      - "9093:9093"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-reviews:5433/review_service_db
+
+  postgres-reviews:
+    image: "postgres:16.1"
+    container_name: "postgres-reviews"
+    ports:
+      - "5433:5433"
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=review_service_db
+      - PGPORT=5433
+    volumes:
+      - db-reviews:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "-d", "review_service_db" ]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s
+
+volumes:
+  db-reviews:
+    driver: local
