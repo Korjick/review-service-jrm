@@ -46,6 +46,7 @@ dependencies {
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}"
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.retry:spring-retry'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
     runtimeOnly 'org.flywaydb:flyway-database-postgresql'
